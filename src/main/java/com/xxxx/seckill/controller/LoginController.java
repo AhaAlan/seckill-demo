@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,8 @@ import javax.validation.Valid;
 /**
  * 登录
  */
-//页面跳转
-@Controller
+
+@Controller	//页面跳转
 @RequestMapping("/login")
 @Slf4j	//lombok的注解，用来输出日志
 public class LoginController {
@@ -28,7 +29,7 @@ public class LoginController {
 	/**
 	 * 功能描述: 跳转登录页面
 	 */
-	@RequestMapping("/toLogin")
+	@RequestMapping(value ="/toLogin",method = RequestMethod.GET)
 	public String toLogin(){
 		return "login";
 	}
@@ -36,11 +37,11 @@ public class LoginController {
 	/**
 	 * 功能描述: 登录功能
 	 */
-	@RequestMapping("/doLogin")
+	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
 	@ResponseBody
 	//@Valid 参数校验
 	public RespBean doLogin(@Valid LoginVo loginVo, HttpServletRequest request, HttpServletResponse response){
-//		log.info("{}",loginVo);
+		log.info("{}",loginVo);
 		return userService.doLogin(loginVo,request,response);
 	}
 

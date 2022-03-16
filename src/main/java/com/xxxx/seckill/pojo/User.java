@@ -8,14 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
- * 
- * </p>
- * 乐字节：专注线上IT培训
- * 答疑老师微信：lezijie
- *
- * @author zhoubin
- *
+ *用户类
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,7 +29,7 @@ public class User implements Serializable {
      */
     private String password;
 
-    private String slat;
+    private String salt;
 
     /**
      * 头像

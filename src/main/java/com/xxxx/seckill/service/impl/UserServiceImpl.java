@@ -38,6 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	public RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) {
 		String mobile = loginVo.getMobile();
 		String password = loginVo.getPassword();
+
 		//自定义并使用了@Valid注解，这里的手写参数校验就不需要了
 //		 //用户名密码校验
 //		 if (StringUtils.isEmpty(mobile)||StringUtils.isEmpty(password)){
@@ -47,29 +48,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //		 if (!ValidatorUtil.isMobile(mobile)){
 //		 	return RespBean.error(RespBeanEnum.MOBILE_ERROR);
 //		 }
-		//根据手机号获取用户
 
+		//根据手机号获取用户
 		User user = userMapper.selectById(mobile);
 		if (null == user) {
-//			return RespBean.error(RespBeanEnum.LOGIN_ERROR);
+			//对异常进行处理
+			//return RespBean.error(RespBeanEnum.LOGIN_ERROR);
 			throw  new GlobalException(RespBeanEnum.LOGIN_ERROR);
 		}
+
 		//判断密码是否正确
-		if (!MD5Util.formPassToDBPass(password, user.getSlat()).equals(user.getPassword())) {
-//			return RespBean.error(RespBeanEnum.LOGIN_ERROR);
+		if (!MD5Util.formPassToDBPass(password, user.getSalt()).equals(user.getPassword())) {
+			//return RespBean.error(RespBeanEnum.LOGIN_ERROR);
 			throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
 		}
 
 		//生成cookie
 		String ticket = UUIDUtil.uuid();
 		//将用户信息存入redis中
-//		redisTemplate.opsForValue().set("user:" + ticket, user);
-		request.getSession().setAttribute(ticket,user);
+		redisTemplate.opsForValue().set("user:" + ticket, user);
+		//request.getSession().setAttribute(ticket,user);
 		CookieUtil.setCookie(request, response, "userTicket", ticket);
-
 		return RespBean.success(ticket);
 	}
-
 
 	/**
 	 * 功能描述: 根据cookie获取用户
@@ -97,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		if (user == null) {
 			throw new GlobalException(RespBeanEnum.MOBILE_NOT_EXIST);
 		}
-		user.setPassword(MD5Util.inputPassToDBPass(password, user.getSlat()));
+		user.setPassword(MD5Util.inputPassToDBPass(password, user.getSalt()));
 		int result = userMapper.updateById(user);
 		if (1 == result) {
 			//删除Redis

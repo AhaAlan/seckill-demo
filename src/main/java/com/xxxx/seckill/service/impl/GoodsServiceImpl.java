@@ -11,14 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p>
- *  服务实现类
- * </p>
- * 乐字节：专注线上IT培训
- * 答疑老师微信：lezijie
- *
- * @author zhoubin
- *
+ *  商品服务实现类
  */
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements IGoodsService {
@@ -28,14 +21,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
 	/**
 	 * 功能描述: 获取商品列表
-	 *
-	 * @param:
-	 * @return:
-	 *
-	 * 乐字节：专注线上IT培训
-	 * 答疑老师微信：lezijie
-	 * @since: 1.0.0
-	 * @Author:zhoubin
 	 */
 	@Override
 	public List<GoodsVo> findGoodsVo() {
@@ -43,17 +28,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 	}
 
 
-
 	/**
 	 * 功能描述: 获取商品详情
-	 *
-	 * @param:
-	 * @return:
-	 *
-	 * 乐字节：专注线上IT培训
-	 * 答疑老师微信：lezijie
-	 * @since: 1.0.0
-	 * @Author:zhoubin
 	 */
 	@Override
 	public GoodsVo findGoodsVoByGoodsId(Long goodsId) {

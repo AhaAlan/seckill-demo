@@ -10,12 +10,6 @@ import java.util.Date;
 
 /**
  * 商品返回对象
- * <p>
- * 乐字节：专注线上IT培训
- * 答疑老师微信：lezijie
- *
- * @author zhoubin
- * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
@@ -23,7 +17,9 @@ import java.util.Date;
 public class GoodsVo extends Goods {
 
 	private BigDecimal seckillPrice;
+	//库存
 	private Integer stockCount;
+	//秒杀开始时间
 	private Date startDate;
 	private Date endDate;
 }

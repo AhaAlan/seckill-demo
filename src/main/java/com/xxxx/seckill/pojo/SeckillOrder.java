@@ -9,14 +9,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * <p>
- * 
- * </p>
- * 乐字节：专注线上IT培训
- * 答疑老师微信：lezijie
- *
- * @author zhoubin
- *
+ * 秒杀订单类
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

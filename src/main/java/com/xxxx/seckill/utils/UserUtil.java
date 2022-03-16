@@ -36,8 +36,8 @@ public class UserUtil {
 			user.setLoginCount(1);
 			user.setNickname("user" + i);
 			user.setRegisterDate(new Date());
-			user.setSlat("1a2b3c");
-			user.setPassword(MD5Util.inputPassToDBPass("123456", user.getSlat()));
+			user.setSalt("1a2b3c");
+			user.setPassword(MD5Util.inputPassToDBPass("123456", user.getSalt()));
 			users.add(user);
 		}
 		System.out.println("create user");

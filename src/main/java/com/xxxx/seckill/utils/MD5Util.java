@@ -2,8 +2,6 @@ package com.xxxx.seckill.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-
-
 /**
  * MD5工具类
  */
@@ -29,8 +27,7 @@ public class MD5Util {
 
 	public static String inputPassToDBPass(String inputPass,String salt){
 		String fromPass = inputPassToFromPass(inputPass);
-		String dbPass = formPassToDBPass(fromPass, salt);
-		return dbPass;
+		return formPassToDBPass(fromPass, salt);
 	}
 
 	//测试
