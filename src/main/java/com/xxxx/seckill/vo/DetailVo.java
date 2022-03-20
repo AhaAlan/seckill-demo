@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 详情返回对象
+ * 为了页面静态化
  */
 @Data
 @NoArgsConstructor

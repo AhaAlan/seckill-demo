@@ -74,7 +74,7 @@ spring:
   # RabbitMQ
   rabbitmq:
     # 服务器
-    host: 192.168.10.101
+    host: 192.168.41.101
     #用户名
     username: guest
     #密码
@@ -83,6 +83,7 @@ spring:
     virtual-host: /
     #端口
     port: 5672
+    # 监听
     listener:
       simple:
         #消费者最小数量
@@ -95,6 +96,7 @@ spring:
         auto-startup: true
         #被拒绝时重新进入队列
         default-requeue-rejected: true
+    #模板配置
     template:
       retry:
         #发布重试，默认false

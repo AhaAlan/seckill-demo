@@ -65,11 +65,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 		//生成cookie
 		String ticket = UUIDUtil.uuid();
-		//将用户信息存入redis中
+		//将用户信息存入redis中（优化二：对象缓存）
 		redisTemplate.opsForValue().set("user:" + ticket, user);
 		//request.getSession().setAttribute(ticket,user);
 		CookieUtil.setCookie(request, response, "userTicket", ticket);
-		return RespBean.success(ticket);
+		return RespBean.success(ticket);	//这里要返回ticket
 	}
 
 	/**
@@ -90,17 +90,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 	/**
 	 * 功能描述:更新密码
+	 * 由于用户一直是存在redis里且永不失效的，如果需要更改密码，需要对redis里的旧信息进行变更
 	 */
 	@Override
-	public RespBean updatePassword(String userTicket, String password, HttpServletRequest request,
-	                               HttpServletResponse response) {
+	public RespBean updatePassword(String userTicket, String password, HttpServletRequest request, HttpServletResponse response) {
 		User user = getUserByCookie(userTicket, request, response);
 		if (user == null) {
 			throw new GlobalException(RespBeanEnum.MOBILE_NOT_EXIST);
 		}
-		user.setPassword(MD5Util.inputPassToDBPass(password, user.getSalt()));
+		user.setPassword(MD5Util.inputPassToDBPass(password, user.getSalt()));	//更新密码
 		int result = userMapper.updateById(user);
-		if (1 == result) {
+		if (1 == result) {	//说明上述操作成功
 			//删除Redis
 			redisTemplate.delete("user:" + userTicket);
 			return RespBean.success();

@@ -89,11 +89,12 @@
 			<artifactId>spring-session-data-redis</artifactId>
 		</dependency>
 
-		<!-- AMQP依赖 -->
+		<!-- AMQP依赖，rabbit依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
+
 		<!-- 验证码依赖 -->
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
