@@ -11,9 +11,10 @@ import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+//Redis实现分布式锁
+
 @SpringBootTest
 public class SeckillDemoApplicationTests {
-
 	@Autowired
 	private RedisTemplate redisTemplate;
 	@Autowired
@@ -56,13 +57,15 @@ public class SeckillDemoApplicationTests {
 	@Test
 	public void testLock03(){
 		ValueOperations valueOperations = redisTemplate.opsForValue();
-		String value = UUID.randomUUID().toString();
+		String value = UUID.randomUUID().toString();	//随机值
+		//给锁添加一个过期时间，防止应用在运行过程中抛出异常导致锁无法正常释放
 		Boolean isLock = valueOperations.setIfAbsent("k1", value, 120, TimeUnit.SECONDS);
 		if(isLock){
 			valueOperations.set("name","xxxx");
 			String name = (String) valueOperations.get("name");
 			System.out.println("name = " + name);
-			System.out.println(valueOperations.get("k1"));
+			System.out.println(valueOperations.get("k1"));	//获取锁的随机值
+			//执行lua脚本
 			Boolean result = (Boolean) redisTemplate.execute(script, Collections.singletonList("k1"), value);
 			System.out.println(result);
 		}else {

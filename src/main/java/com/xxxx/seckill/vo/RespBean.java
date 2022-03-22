@@ -16,7 +16,7 @@ public class RespBean {
 	//消息
 	private String message;
 	//返回可能带对象
-	private Object obj;
+	private Object obj;	//注意这里的命名，和传回ajax中的值相关
 
 	/**
 	 * 功能描述: 成功返回结果

@@ -74,7 +74,7 @@ spring:
   # RabbitMQ
   rabbitmq:
     # 服务器
-    host: 192.168.41.101
+    host: 192.168.41.102
     #用户名
     username: guest
     #密码

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SeckillMessage {
 	private User user;
-	private Long goodId;
+	private Long goodsId;
 }
