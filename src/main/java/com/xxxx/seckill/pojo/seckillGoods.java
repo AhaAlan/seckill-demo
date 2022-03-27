@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("t_seckill_goods")
-public class SeckillGoods implements Serializable {
+public class seckillGoods implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

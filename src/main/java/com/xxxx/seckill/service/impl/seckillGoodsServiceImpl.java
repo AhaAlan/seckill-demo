@@ -2,10 +2,10 @@ package com.xxxx.seckill.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xxxx.seckill.mapper.SeckillGoodsMapper;
-import com.xxxx.seckill.pojo.SeckillGoods;
-import com.xxxx.seckill.pojo.SeckillOrder;
-import com.xxxx.seckill.service.ISecKillGoodsService;
+import com.xxxx.seckill.mapper.seckillGoodsMapper;
+import com.xxxx.seckill.pojo.seckillGoods;
+import com.xxxx.seckill.pojo.seckillOrder;
+import com.xxxx.seckill.service.IseckillGoodsService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class SecKillGoodsServiceImpl extends ServiceImpl<SeckillGoodsMapper, SeckillGoods> implements ISecKillGoodsService {
+public class seckillGoodsServiceImpl extends ServiceImpl<seckillGoodsMapper, seckillGoods> implements IseckillGoodsService {
 
 
     @Override
-    public SeckillGoods getOne(QueryWrapper<SeckillOrder> eq) {
+    public seckillGoods getOne(QueryWrapper<seckillOrder> eq) {
         return null;
     }
 }

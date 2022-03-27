@@ -89,19 +89,19 @@ public class GoodsController {
 		Date startDate = goodsVo.getStartDate();	//获取秒杀开始时间
 		Date endDate = goodsVo.getEndDate();		//获取秒杀结束时间
 		Date nowDate = new Date();					//获取当前时间
-		int secKillStatus = 0;		//秒杀状态
+		int seckillStatus = 0;		//秒杀状态
 		int remainSeconds;		//秒杀倒计时
 		if (nowDate.before(startDate)) {		//秒杀还未开始
 			remainSeconds = ((int) ((startDate.getTime() - nowDate.getTime()) / 1000));
 		} else if (nowDate.after(endDate)) {	//	秒杀已结束
-			secKillStatus = 2;
+			seckillStatus = 2;
 			remainSeconds = -1;
 		} else {								//秒杀中
-			secKillStatus = 1;
+			seckillStatus = 1;
 			remainSeconds = 0;
 		}
 		model.addAttribute("remainSeconds", remainSeconds);
-		model.addAttribute("secKillStatus", secKillStatus);
+		model.addAttribute("seckillStatus", seckillStatus);
 		model.addAttribute("goods", goodsVo);
 
 
@@ -128,22 +128,22 @@ public class GoodsController {
 		Date endDate = goodsVo.getEndDate();		//获取秒杀结束时间
 		Date nowDate = new Date();					//获取当前时间
 
-		int secKillStatus = 0;		//秒杀状态
+		int seckillStatus = 0;		//秒杀状态
 		int remainSeconds;		//秒杀倒计时
 		if (nowDate.before(startDate)) {		//秒杀还未开始
 			remainSeconds = ((int) ((startDate.getTime() - nowDate.getTime()) / 1000));
 		} else if (nowDate.after(endDate)) {	//	秒杀已结束
-			secKillStatus = 2;
+			seckillStatus = 2;
 			remainSeconds = -1;
 		} else {								//秒杀中
-			secKillStatus = 1;
+			seckillStatus = 1;
 			remainSeconds = 0;
 		}
 
 		DetailVo detailVo = new DetailVo();
 		detailVo.setUser(user);
 		detailVo.setGoodsVo(goodsVo);
-		detailVo.setSecKillStatus(secKillStatus);
+		detailVo.setSeckillStatus(seckillStatus);
 		detailVo.setRemainSeconds(remainSeconds);
 		return RespBean.success(detailVo);
 	}

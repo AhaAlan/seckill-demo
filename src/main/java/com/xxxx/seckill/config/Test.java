@@ -8,11 +8,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * 乐字节：专注线上IT培训
- * 答疑老师微信：lezijie
- *
- * @author zhoubin
- * @since 1.0.0
+ * rabbitmq测试类
  */
 public class Test {
     public static final String QUEUE_NAME="hello";

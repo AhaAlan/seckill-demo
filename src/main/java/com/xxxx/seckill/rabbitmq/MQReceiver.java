@@ -1,7 +1,7 @@
 package com.xxxx.seckill.rabbitmq;
 
-import com.xxxx.seckill.pojo.SeckillMessage;
-import com.xxxx.seckill.pojo.SeckillOrder;
+import com.xxxx.seckill.pojo.seckillMessage;
+import com.xxxx.seckill.pojo.seckillOrder;
 import com.xxxx.seckill.pojo.User;
 import com.xxxx.seckill.service.IGoodsService;
 import com.xxxx.seckill.service.IOrderService;
@@ -76,7 +76,7 @@ public class MQReceiver {
     @RabbitListener(queues = "seckillQueue")
     public void receive(String message) {
         log.info("接收消息：" + message);
-        SeckillMessage seckillMessage = JsonUtil.jsonStr2Object(message, SeckillMessage.class);
+        seckillMessage seckillMessage = JsonUtil.jsonStr2Object(message, seckillMessage.class);
         Long goodsId = seckillMessage.getGoodsId();
         User user = seckillMessage.getUser();
         //判断库存
@@ -85,12 +85,12 @@ public class MQReceiver {
             return;
         }
         //判断是否重复抢购
-        SeckillOrder seckillOrder = (SeckillOrder) redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
+        seckillOrder seckillOrder = (seckillOrder) redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
         if (seckillOrder != null) {
             return;
         }
         //下单操作
-        orderService.secKill(user, goodsVo);
+        orderService.seckill(user, goodsVo);
     }
 
 

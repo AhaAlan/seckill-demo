@@ -14,10 +14,6 @@ public final class CookieUtil {
 
     /**
      * 得到Cookie的值, 不编码
-     *
-     * @param request
-     * @param cookieName
-     * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName) {
         return getCookieValue(request, cookieName, false);
@@ -25,10 +21,6 @@ public final class CookieUtil {
 
     /**
      * 得到Cookie的值,
-     *
-     * @param request
-     * @param cookieName
-     * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName, boolean isDecoder) {
         Cookie[] cookieList = request.getCookies();
@@ -55,10 +47,6 @@ public final class CookieUtil {
 
     /**
      * 得到Cookie的值,
-     *
-     * @param request
-     * @param cookieName
-     * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName, String encodeString) {
         Cookie[] cookieList = request.getCookies();
@@ -129,7 +117,6 @@ public final class CookieUtil {
 
     /**
      * 设置Cookie的值，并使其在指定时间内生效
-     *
      * @param cookieMaxage cookie生效的最大秒数
      */
     private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response,

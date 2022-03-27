@@ -56,7 +56,7 @@ public class UserUtil {
 
 		//登录，生成userTicket，因为jmeter测试需要用户的userTikcet
 		String urlString = "http://localhost:8080/login/doLogin";	//访问的IP地址与接口
-		File file = new File("C:\\Users\\jafari\\Desktop\\seckill-demo\\config.txt");
+		File file = new File("C:\\Users\\jafari\\Desktop\\seckill\\config.txt");
 		if (file.exists()) {
 			file.delete();
 		}

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 //Redis实现分布式锁
 
 @SpringBootTest
-public class SeckillDemoApplicationTests {
+public class seckillDemoApplicationTests {
 	@Autowired
 	private RedisTemplate redisTemplate;
 	@Autowired

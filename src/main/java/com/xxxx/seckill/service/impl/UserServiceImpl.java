@@ -1,8 +1,8 @@
 package com.xxxx.seckill.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xxxx.seckill.exception.GlobalException;
 import com.xxxx.seckill.mapper.UserMapper;
+import com.xxxx.seckill.exception.GlobalException;
 import com.xxxx.seckill.pojo.User;
 import com.xxxx.seckill.service.IUserService;
 import com.xxxx.seckill.utils.CookieUtil;

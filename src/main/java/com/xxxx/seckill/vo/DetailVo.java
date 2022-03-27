@@ -18,7 +18,7 @@ public class DetailVo {
 
 	private GoodsVo goodsVo;
 
-	private int secKillStatus;
+	private int seckillStatus;
 
 	private int remainSeconds;
 }
