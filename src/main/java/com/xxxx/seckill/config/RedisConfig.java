@@ -39,6 +39,7 @@ public class RedisConfig {
 //        return redisScript;
 //    }
 
+    //读取lua脚本
     @Bean
     public DefaultRedisScript<Long> script() {
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();

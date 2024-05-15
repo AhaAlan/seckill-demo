@@ -16,18 +16,19 @@ import javax.validation.Valid;
 
 /**
  * 登录
+ * @Slf4j lombok的注解，用来输出日志
  */
 
-@Controller	//页面跳转
+@Controller
 @RequestMapping("/login")
-@Slf4j	//lombok的注解，用来输出日志
+@Slf4j
 public class LoginController {
 
 	@Autowired
 	private IUserService userService;
 
 	/**
-	 * 功能描述: 跳转登录页面
+	 * 功能描述: 跳转到登录页面
 	 */
 	@RequestMapping(value ="/toLogin",method = RequestMethod.GET)
 	public String toLogin(){
@@ -36,12 +37,11 @@ public class LoginController {
 
 	/**
 	 * 功能描述: 登录功能
+	 * 注解 @Valid 用于参数校验
 	 */
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
 	@ResponseBody
-	//@Valid 参数校验
 	public RespBean doLogin(@Valid LoginVo loginVo, HttpServletRequest request, HttpServletResponse response){
-		log.info("{}",loginVo);
 		return userService.doLogin(loginVo,request,response);
 	}
 

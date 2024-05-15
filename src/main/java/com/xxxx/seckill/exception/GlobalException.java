@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 全局异常
+ * 全局异常类
+ * 继承自运行时异常类 RuntimeException
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//需要继承RuntimeException
 public class GlobalException extends RuntimeException {
 	private RespBeanEnum respBeanEnum;
 }

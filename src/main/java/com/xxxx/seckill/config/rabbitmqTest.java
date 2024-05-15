@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * rabbitmq测试类
  */
-public class Test {
+public class rabbitmqTest {
     public static final String QUEUE_NAME="hello";
     public static void main(String[] args) throws IOException, TimeoutException {
         //创建一个连接工厂

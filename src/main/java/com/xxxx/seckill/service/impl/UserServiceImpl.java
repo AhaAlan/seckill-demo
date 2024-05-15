@@ -1,8 +1,8 @@
 package com.xxxx.seckill.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xxxx.seckill.mapper.UserMapper;
 import com.xxxx.seckill.exception.GlobalException;
+import com.xxxx.seckill.mapper.UserMapper;
 import com.xxxx.seckill.pojo.User;
 import com.xxxx.seckill.service.IUserService;
 import com.xxxx.seckill.utils.CookieUtil;
@@ -11,11 +11,11 @@ import com.xxxx.seckill.utils.UUIDUtil;
 import com.xxxx.seckill.vo.LoginVo;
 import com.xxxx.seckill.vo.RespBean;
 import com.xxxx.seckill.vo.RespBeanEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,29 +25,18 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-	@Resource
+	@Autowired
 	private UserMapper userMapper;
 
-	@Resource
+	@Autowired
 	private RedisTemplate redisTemplate;
 
-	/**
-	 * 功能描述: 登录
-	 */
+	//功能描述: 登录
 	@Override
 	public RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) {
 		String mobile = loginVo.getMobile();
 		String password = loginVo.getPassword();
 
-		//自定义并使用了@Valid注解，这里的手写参数校验就不需要了
-//		 //用户名密码校验
-//		 if (StringUtils.isEmpty(mobile)||StringUtils.isEmpty(password)){
-//		 	return RespBean.error(RespBeanEnum.LOGIN_ERROR);
-//		 }
-//		 //手机号码校验
-//		 if (!ValidatorUtil.isMobile(mobile)){
-//		 	return RespBean.error(RespBeanEnum.MOBILE_ERROR);
-//		 }
 
 		//根据手机号获取用户
 		User user = userMapper.selectById(mobile);
@@ -67,14 +56,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		String ticket = UUIDUtil.uuid();
 		//将用户信息存入redis中（优化二：对象缓存）
 		redisTemplate.opsForValue().set("user:" + ticket, user);
-		//request.getSession().setAttribute(ticket,user);
 		CookieUtil.setCookie(request, response, "userTicket", ticket);
 		return RespBean.success(ticket);	//这里要返回ticket
 	}
 
-	/**
-	 * 功能描述: 根据cookie获取用户
-	 */
+	//功能描述: 根据cookie获取用户
 	@Override
 	public User getUserByCookie(String userTicket, HttpServletRequest request, HttpServletResponse response) {
 		if (StringUtils.isEmpty(userTicket)) {

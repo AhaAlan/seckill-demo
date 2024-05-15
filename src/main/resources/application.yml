@@ -49,7 +49,7 @@ spring:
 
   # redis配置
   redis:
-    #服务器地址
+    #服务器地址，使用的是 master虚拟机
     host: 192.168.41.101
     #端口
     port: 6379
@@ -73,7 +73,7 @@ spring:
 
   # RabbitMQ
   rabbitmq:
-    # 服务器
+    # 服务器,使用的是node02虚拟机
     host: 192.168.41.102
     #用户名
     username: guest

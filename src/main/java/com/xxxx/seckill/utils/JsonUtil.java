@@ -11,18 +11,12 @@ import java.util.List;
 
 /**
  * Json工具类
- *
- * @author zhoubin
- * @since 1.0.0
  */
 public class JsonUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 将对象转换成json字符串
-     *
-     * @param obj
-     * @return
      */
     public static String object2JsonStr(Object obj) {
         try {
@@ -36,8 +30,6 @@ public class JsonUtil {
 
     /**
      * 将字符串转换为对象
-     *
-     * @param <T> 泛型
      */
     public static <T> T jsonStr2Object(String jsonStr, Class<T> clazz) {
         try {
@@ -54,12 +46,6 @@ public class JsonUtil {
 
     /**
      * 将json数据转换成pojo对象list
-     * <p>Title: jsonToList</p>
-     * <p>Description: </p>
-     *
-     * @param jsonStr
-     * @param beanType
-     * @return
      */
     public static <T> List<T> jsonToList(String jsonStr, Class<T> beanType) {
         JavaType javaType = objectMapper.getTypeFactory().constructParametricType(List.class, beanType);

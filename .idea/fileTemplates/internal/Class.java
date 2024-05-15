@@ -5,8 +5,7 @@
  * 
    #parse("File Header.java")
    
-   @author zhoubin
- * @since 1.0.0
+   @author JinZhe HE
  */
 public class ${NAME} {
 }

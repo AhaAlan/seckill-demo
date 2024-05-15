@@ -12,16 +12,12 @@ import java.net.URLEncoder;
  */
 public final class CookieUtil {
 
-    /**
-     * 得到Cookie的值, 不编码
-     */
+    //得到Cookie的值, 不编码
     public static String getCookieValue(HttpServletRequest request, String cookieName) {
         return getCookieValue(request, cookieName, false);
     }
 
-    /**
-     * 得到Cookie的值,
-     */
+    //得到Cookie的值
     public static String getCookieValue(HttpServletRequest request, String cookieName, boolean isDecoder) {
         Cookie[] cookieList = request.getCookies();
         if (cookieList == null || cookieName == null) {
@@ -45,9 +41,7 @@ public final class CookieUtil {
         return retValue;
     }
 
-    /**
-     * 得到Cookie的值,
-     */
+    //得到Cookie的值
     public static String getCookieValue(HttpServletRequest request, String cookieName, String encodeString) {
         Cookie[] cookieList = request.getCookies();
         if (cookieList == null || cookieName == null) {
@@ -67,49 +61,37 @@ public final class CookieUtil {
         return retValue;
     }
 
-    /**
-     * 设置Cookie的值 不设置生效时间默认浏览器关闭即失效,也不编码
-     */
+    //设置Cookie的值 不设置生效时间默认浏览器关闭即失效,也不编码
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
                                  String cookieValue) {
         setCookie(request, response, cookieName, cookieValue, -1);
     }
 
-    /**
-     * 设置Cookie的值 在指定时间内生效,但不编码
-     */
+    //设置Cookie的值 在指定时间内生效,但不编码
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
                                  String cookieValue, int cookieMaxage) {
         setCookie(request, response, cookieName, cookieValue, cookieMaxage, false);
     }
 
-    /**
-     * 设置Cookie的值 不设置生效时间,但编码
-     */
+    //设置Cookie的值 不设置生效时间,但编码
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
                                  String cookieValue, boolean isEncode) {
         setCookie(request, response, cookieName, cookieValue, -1, isEncode);
     }
 
-    /**
-     * 设置Cookie的值 在指定时间内生效, 编码参数
-     */
+    //设置Cookie的值 在指定时间内生效, 编码参数
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
                                  String cookieValue, int cookieMaxage, boolean isEncode) {
         doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, isEncode);
     }
 
-    /**
-     * 设置Cookie的值 在指定时间内生效, 编码参数(指定编码)
-     */
+    //设置Cookie的值 在指定时间内生效, 编码参数(指定编码)
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
                                  String cookieValue, int cookieMaxage, String encodeString) {
         doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, encodeString);
     }
 
-    /**
-     * 删除Cookie带cookie域名
-     */
+    //删除Cookie带cookie域名
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response,
                                     String cookieName) {
         doSetCookie(request, response, cookieName, "", -1, false);
@@ -146,8 +128,7 @@ public final class CookieUtil {
 
     /**
      * 设置Cookie的值，并使其在指定时间内生效
-     *
-     * @param cookieMaxage cookie生效的最大秒数
+     *  cookieMaxage： cookie生效的最大秒数
      */
     private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response,
                                           String cookieName, String cookieValue, int cookieMaxage, String encodeString) {

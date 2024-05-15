@@ -17,12 +17,13 @@ import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 验证手机号的注解
+ * 自定义参数校验注解
+ * 针对手机号
  */
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = {IsMobileValidator.class})	//自己定义校验规则
+@Constraint(validatedBy = {IsMobileValidator.class})	//自己定义的校验规则
 public @interface IsMobile {
 
 	boolean required() default true;

@@ -112,13 +112,9 @@ public class seckillController implements InitializingBean {
             return RespBean.error(RespBeanEnum.SESSION_ERROR);
         }
 
-        //优化：使用redis预减库存
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-
         //秒杀接口路径校验
         boolean check = orderService.checkPath(user,goodsId,path);
         if(!check){
-
             return RespBean.error(RespBeanEnum.REQUEST_ILLEGAL);
         }
 
@@ -127,44 +123,47 @@ public class seckillController implements InitializingBean {
         if(one!=null){
             return RespBean.error(RespBeanEnum.REPEATE_ERROR);  //跳转到秒杀失败页面
         }
+
         //内存标记，减少对redis的访问
         if(emptyStockMap.get(goodsId)){
             return RespBean.error(RespBeanEnum.EMPTY_STOCK);
         }
 
         //递减库存操作
+        //优化：使用redis预减库存
+        ValueOperations valueOperations = redisTemplate.opsForValue();
         Long stock = valueOperations.decrement("seckillGoods:" + goodsId);//原子性操作
 //        //再优化：利用redis实现分布式锁，使用lua脚本
 //        Long stock =(Long)redisTemplate.execute(script, Collections.singletonList("seckillGoods:" + goodsId), Collections.EMPTY_LIST);
         if(stock<0){
             emptyStockMap.put(goodsId,true);
             valueOperations.increment("seckillGoods:" + goodsId);
-            return RespBean.error(RespBeanEnum.EMPTY_STOCK);
+            return RespBean.error(RespBeanEnum.EMPTY_STOCK);    //返回库存不足
         }
 
+        //请求入队
         seckillMessage seckillMessage = new seckillMessage(user, goodsId);
         mqSender.sendseckillMessage(JsonUtil.object2JsonStr(seckillMessage));
         return RespBean.success(0); //0表示排队中
 
 
-        /*
-        //原始代码
-        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
-        //如果库存为0
-        if(goodsVo.getStockCount()<1){
-            return RespBean.error(RespBeanEnum.EMPTY_STOCK);  //跳转到秒杀失败页面
-        }
-        //判断是否重复抢购
-        seckillOrder one = (seckillOrder)redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
+//        //原始代码
+//        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
+//        //如果库存为0
+//        if(goodsVo.getStockCount()<1){
+//            return RespBean.error(RespBeanEnum.EMPTY_STOCK);  //跳转到秒杀失败页面
+//        }
+//        //判断是否重复抢购
+//        seckillOrder one = (seckillOrder)redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
+//
+//        if(one!=null){
+//            return RespBean.error(RespBeanEnum.REPEATE_ERROR);  //跳转到秒杀失败页面
+//        }
+//
+//        //满足所有判断条件,开始秒杀
+//        Order order = orderService.seckill(user,goodsVo);
+//        return RespBean.success(order);
 
-        if(one!=null){
-            return RespBean.error(RespBeanEnum.REPEATE_ERROR);  //跳转到秒杀失败页面
-        }
-
-        //满足所有判断条件,开始秒杀
-        Order order = orderService.seckill(user,goodsVo);
-        return RespBean.success(order);
-        */
     }
 
 
@@ -172,8 +171,8 @@ public class seckillController implements InitializingBean {
      * 秒杀接口——秒杀静态化页面优化前
      * Windows优化前QPS：吞吐量944.9/sec（1000个线程，循环10，重复三次）
      */
-    @RequestMapping(value = "/doseckill2", method = RequestMethod.POST)
-    public String doseckill2(Model model, User user, long goodsId){
+    @RequestMapping(value = "/doseckill0", method = RequestMethod.POST)
+    public String doseckill0(Model model, User user, long goodsId){
         //如果用户不存在
         if(user==null){
             return "login";
@@ -243,7 +242,7 @@ public class seckillController implements InitializingBean {
     }
 
     /**
-     * 获取秒杀结果
+     * 轮询，获取秒杀结果
      * @return orderId 成功 ；-1 秒杀失败 ；0 排队中
      **/
     @RequestMapping(value="/result",method = RequestMethod.GET)

@@ -1,4 +1,4 @@
-package com.xxxx;
+package com.xxxx.seckill;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -10,5 +10,4 @@ public class seckillDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(seckillDemoApplication.class, args);
 	}
-
 }

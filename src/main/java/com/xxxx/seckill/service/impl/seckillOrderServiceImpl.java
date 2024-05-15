@@ -39,5 +39,4 @@ public class seckillOrderServiceImpl extends ServiceImpl<seckillOrderMapper, sec
         }
     }
 
-
 }

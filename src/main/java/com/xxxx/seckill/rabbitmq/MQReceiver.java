@@ -28,6 +28,30 @@ public class MQReceiver {
     @Autowired
     private IOrderService orderService;
 
+    /**
+     *  接收到秒杀信息后的下单操作
+     **/
+    @RabbitListener(queues = "seckillQueue")
+    public void receive(String message) {
+        log.info("接收消息：" + message);
+        seckillMessage seckillMessage = JsonUtil.jsonStr2Object(message, seckillMessage.class);
+        Long goodsId = seckillMessage.getGoodsId();
+        User user = seckillMessage.getUser();
+        //判断库存
+        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
+        if (goodsVo.getStockCount() < 1) {
+            return;
+        }
+        //判断是否重复抢购
+        seckillOrder seckillOrder = (seckillOrder) redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
+        if (seckillOrder != null) {
+            return;
+        }
+        //下单操作
+        orderService.seckill(user, goodsVo);
+    }
+
+
 
 //    @RabbitListener(queues = "queue")
 //    public void receive(Object msg) {
@@ -69,29 +93,6 @@ public class MQReceiver {
 //        log.info("QUEUE02接收消息" + msg);
 //    }
 
-
-    /**
-     *  接收到秒杀信息后的下单操作
-     **/
-    @RabbitListener(queues = "seckillQueue")
-    public void receive(String message) {
-        log.info("接收消息：" + message);
-        seckillMessage seckillMessage = JsonUtil.jsonStr2Object(message, seckillMessage.class);
-        Long goodsId = seckillMessage.getGoodsId();
-        User user = seckillMessage.getUser();
-        //判断库存
-        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
-        if (goodsVo.getStockCount() < 1) {
-            return;
-        }
-        //判断是否重复抢购
-        seckillOrder seckillOrder = (seckillOrder) redisTemplate.opsForValue().get("order:" + user.getId() + ":" + goodsId);
-        if (seckillOrder != null) {
-            return;
-        }
-        //下单操作
-        orderService.seckill(user, goodsVo);
-    }
 
 
 }

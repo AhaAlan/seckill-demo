@@ -6,7 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 手机号码校验
+ * 参数校验工具类
+ * 主要针对手机号码的格式进行校验
  */
 public class ValidatorUtil {
 	//正则表达式，手机号码的格式

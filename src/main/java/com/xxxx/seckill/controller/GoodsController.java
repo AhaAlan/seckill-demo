@@ -73,9 +73,9 @@ public class GoodsController {
 	 * 功能描述: 跳转商品详情页
 	 * 优化一：url缓存，利用redis
 	 */
-	@RequestMapping(value = "/toDetail2/{goodsId}", produces = "text/html;charset=utf-8")
+	@RequestMapping(value = "/toDetail0/{goodsId}", produces = "text/html;charset=utf-8")
 	@ResponseBody
-	public String toDetail2(Model model, User user, @PathVariable Long goodsId,HttpServletRequest request, HttpServletResponse response) {
+	public String toDetail0(Model model, User user, @PathVariable Long goodsId,HttpServletRequest request, HttpServletResponse response) {
 		//Redis中获取页面，如果不为空，直接返回页面
 		ValueOperations valueOperations = redisTemplate.opsForValue();
 		String html = (String) valueOperations.get("goodsDetail:" + goodsId);

@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * 公共返回对象枚举
+ * 公共返回对象枚举类
+ * 对所有可能的状态，进行枚举，需要时直接调用
  */
 @Getter
 @ToString
